@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Indiz Instant - Earn ₹1 every 10 seconds</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-site-verification" content="PZCt8a_ahv21VHvdfWVO3aLRWQuiPsdrut4L6R9ALRk" />
+  <style>
+    body { margin: 0; font-family: sans-serif; background: #f2f2f2; }
+    header { background: #222; color: white; padding: 1rem; text-align: center; font-size: 24px; position: sticky; top: 0; z-index: 1000; }
+    #wallet { float: right; background: gold; color: black; padding: 6px 14px; border-radius: 20px; font-size: 14px; margin-right: 15px; }
+    nav { display: flex; justify-content: space-around; background: #333; padding: 10px 0; }
+    nav button { background: #555; color: white; padding: 10px 16px; border-radius: 20px; border: none; cursor: pointer; }
+    .section { display: none; padding: 20px; }
+    .active { display: block; }
+    .video-card { background: white; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1); padding: 10px; }
+    iframe, video { width: 100%; border-radius: 8px; height: 200px; }
+    .btn-row { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+    .btn-row button { border: none; padding: 8px 14px; border-radius: 20px; font-size: 14px; cursor: pointer; }
+    .like { background: #2196f3; color: white; }
+    .dislike { background: #f44336; color: white; }
+    .connect { background: yellow; color: black; }
+    .connect.connected { background: green; color: white; }
+    .share { background: #9c27b0; color: white; }
+    .badge { display: inline-block; animation: spin 2s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+    form input, form button { width: 90%; padding: 10px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; }
+    form button { background: green; color: white; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    IndizTube <span id="wallet">💰 ₹0</span>
+  </header>
+
+  <nav>
+    <button onclick="show('home')">Home</button>
+    <button onclick="show('search')">Search</button>
+    <button onclick="show('dashboard')">Dashboard</button>
+    <button onclick="show('withdraw')">Withdraw</button>
+  </nav>
+
+  <div id="home" class="section active">
+    <div id="videoList"></div>
+  </div>
+
+  <div id="search" class="section">
+    <input id="searchBox" placeholder="Search YouTube..." style="width:75%;padding:10px;border-radius:20px;">
+    <button onclick="searchYT(this)" style="padding:10px;border-radius:20px;background:red;">🔍</button>
+    <div id="searchResults"></div>
+  </div>
+
+  <div id="dashboard" class="section">
+    <h3>My Earnings Dashboard</h3>
+    <p>Total Videos Added: <span id="totalVideos">0</span></p>
+    <p>Total Earnings: <span id="totalEarnings">₹0</span></p>
+    <p>Referral Bonus: ₹<span id="refBonus">0</span></p>
+    <p>Share link: <code id="refLink">https://indiztube.netlify.app/?ref=you123</code></p>
+  </div>
+
+  <div id="withdraw" class="section">
+    <h3>Withdraw Your Earnings</h3>
+    <p>Fill the form below to request withdrawal.</p>
+    <form action="https://formsubmit.co/aaravbretiya@gmail.com" method="POST">
+      <input type="text" name="Name" placeholder="Your Name" required>
+      <input type="text" name="UPI_or_PayPal" placeholder="UPI ID or PayPal" required>
+      <input type="email" name="Email" placeholder="Your Email" required>
+      <input type="text" name="Amount" placeholder="Withdraw Amount ₹" required>
+      <input type="hidden" name="_next" value="https://indiztube.netlify.app/thankyou.html">
+      <input type="hidden" name="_captcha" value="false">
+      <button type="submit">Submit Withdrawal</button>
+    </form>
+  </div>
+
+  <script>
+    let coins = 0;
+    let totalVideos = 0;
+    const wallet = document.getElementById("wallet");
+    const videoList = document.getElementById("videoList");
+    const totalEarnings = document.getElementById("totalEarnings");
+    const totalVideosSpan = document.getElementById("totalVideos");
+
+    function show(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function updateUI() {
+      wallet.innerText = `💰 ₹${coins}`;
+      totalEarnings.innerText = `₹${coins}`;
+    }
+
+    function addVideoCard(title, url, channel, img) {
+      totalVideos++;
+      totalVideosSpan.innerText = totalVideos;
+      const card = document.createElement("div");
+      card.className = "video-card";
+      card.innerHTML = `
+        <div><b>${title}</b> <span class='badge'>💎</span></div>
+        <iframe src="${url}" allowfullscreen></iframe>
+        <div><b>Channel:</b> ${channel}</div>
+        <div class="btn-row">
+          <button class="like" onclick="count(this, '👍 Like')">👍 Like (0)</button>
+          <button class="dislike" onclick="count(this, '👎 Dislike')">👎 Dislike (0)</button>
+          <button class="share" onclick="copy('${url}')">📤 Share</button>
+          <button class="connect" onclick="connect(this)">Connect (0)</button>
+        </div>
+      `;
+      videoList.prepend(card);
+    }
+
+    function count(btn, label) {
+      let c = parseInt(btn.innerText.match(/\((\d+)\)/)?.[1] || 0) + 1;
+      btn.innerText = `${label} (${c})`;
+    }
+
+    function connect(btn) {
+      if (btn.classList.contains("connected")) return;
+      btn.classList.add("connected");
+      count(btn, "Connect");
+    }
+
+    function copy(text) {
+      navigator.clipboard.writeText(text);
+      alert("Copied: " + text);
+    }
+
+    function searchYT(btn) {
+      btn.style.background = "purple";
+      let q = document.getElementById("searchBox").value.trim();
+      fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${q}&key=AIzaSyC8deh4aDWekkvuegD5g6mNhFUrbRNVUTU`)
+      .then(res => res.json())
+      .then(json => {
+        document.getElementById("searchResults").innerHTML = json.items.map(v => {
+          let vid = v.id.videoId;
+          let title = v.snippet.title;
+          let channel = v.snippet.channelTitle;
+          let img = v.snippet.thumbnails.default.url;
+          let url = `https://www.youtube.com/embed/${vid}`;
+          return `<div class="video-card">
+            <div><b>${title}</b></div>
+            <iframe src="${url}" allowfullscreen></iframe>
+            <button onclick='addVideoCard("${title}","${url}","${channel}","${img}");coins+=5;updateUI();' style='background:yellow;padding:6px 12px;border-radius:20px;'>Add to Home</button>
+          </div>`;
+        }).join('');
+      });
+    }
+
+    function autoFeed() {
+      fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=trending&key=AIzaSyC8deh4aDWekkvuegD5g6mNhFUrbRNVUTU`)
+      .then(res => res.json())
+      .then(json => {
+        json.items.forEach(v => {
+          let vid = v.id.videoId;
+          let title = v.snippet.title;
+          let channel = v.snippet.channelTitle;
+          let img = v.snippet.thumbnails.default.url;
+          let url = `https://www.youtube.com/embed/${vid}`;
+          addVideoCard(title, url, channel, img);
+        });
+      });
+    }
+
+    setInterval(() => {
+      coins += 1; updateUI();
+    }, 10000);
+
+    window.onload = () => {
+      updateUI();
+      autoFeed();
+    };
+  </script>
+</body>
+</html>
