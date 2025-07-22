@@ -36,7 +36,7 @@
 </div>
 <div class="search-box">
   <h2>🔍 YouTube Video Search</h2>
-  <input type="text" id="l" placeholder="Search YouTube video">
+  <input type="text" id="youtubeQuery" placeholder="Search YouTube video">
   <button onclick="searchYouTube()">Search</button>
   <div id="youtubeResults"></div>
 </div>
@@ -44,16 +44,6 @@
   <h2>📺 Your Video Gallery</h2>
   <div id="videoGallery"></div>
 </div>
-  </style>
-</head>
-<body>
-
-  <button class="cos-button" onclick="window.location.href='https://cos.tv'">
-    🚀Earn fast open indinext cos
-  </button>
-
-</body>
-</html>
 <div class="withdraw">
   <h2>💸 Withdraw</h2>
   <p style="text-align:center;">Fill the subsciption form for take your withdrawls its necessary,without subscribe you cant take your payments.</p>
@@ -96,7 +86,7 @@
   let totalCoins = Number(localStorage.getItem("idz-coins")) || 0;
 
   function updateTotalEarningsDisplay() {
-    const totalRupees = totalCoins * 480;
+    const totalRupees = totalCoins * 2;
     document.getElementById("totalEarnings").innerText =
       `Total IDZ Earned: ${totalCoins} (₹${totalRupees.toLocaleString()})`;
     localStorage.setItem("idz-coins", totalCoins);
@@ -206,7 +196,7 @@
         }
         coins++;
         totalCoins++;
-        const rupees = coins * ;
+        const rupees = coins * 2;
         display.innerText = `IDZ Earned: ${coins} (₹${rupees.toLocaleString()})`;
         updateTotalEarningsDisplay();
         display.classList.add("boom");
@@ -245,4 +235,3 @@
   }
 </script></body>
 </html>
-
