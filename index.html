@@ -1,174 +1,230 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8" />
-  <title>Indiz Instant - Earn ₹1 every 10 seconds</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification" content="PZCt8a_ahv21VHvdfWVO3aLRWQuiPsdrut4L6R9ALRk" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Induztube</title>
   <style>
-    body { margin: 0; font-family: sans-serif; background: #f2f2f2; }
-    header { background: #222; color: white; padding: 1rem; text-align: center; font-size: 24px; position: sticky; top: 0; z-index: 1000; }
-    #wallet { float: right; background: gold; color: black; padding: 6px 14px; border-radius: 20px; font-size: 14px; margin-right: 15px; }
-    nav { display: flex; justify-content: space-around; background: #333; padding: 10px 0; }
-    nav button { background: #555; color: white; padding: 10px 16px; border-radius: 20px; border: none; cursor: pointer; }
-    .section { display: none; padding: 20px; }
-    .active { display: block; }
-    .video-card { background: white; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1); padding: 10px; }
-    iframe, video { width: 100%; border-radius: 8px; height: 200px; }
-    .btn-row { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-    .btn-row button { border: none; padding: 8px 14px; border-radius: 20px; font-size: 14px; cursor: pointer; }
-    .like { background: #2196f3; color: white; }
-    .dislike { background: #f44336; color: white; }
-    .connect { background: yellow; color: black; }
-    .connect.connected { background: green; color: white; }
-    .share { background: #9c27b0; color: white; }
-    .badge { display: inline-block; animation: spin 2s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
-    form input, form button { width: 90%; padding: 10px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; }
-    form button { background: green; color: white; font-weight: bold; }
+    body { font-family: Arial; background: #000; color: #fff; padding: 20px; }
+    h1 { text-align: center; color: #00f7ff; }
+    .upload-section, .gallery, .withdraw, .search-box, .admin-dashboard { margin: 20px 0; }
+    input, button { padding: 10px; margin: 5px 0; border-radius: 8px; }
+    video { width: 100%; max-width: 300px; border: 2px solid #00f7ff; border-radius: 10px; }
+    .video-box { background: #111; padding: 10px; border-radius: 10px; margin-bottom: 20px; }
+    .earnings-display { font-size: 16px; color: #00ff88; font-weight: bold; }
+    .boom { animation: boom 0.5s ease-in-out; color: yellow; }
+    @keyframes boom { 0% { transform: scale(1); } 50% { transform: scale(1.3); color: red; } 100% { transform: scale(1); } }
+    progress { width: 100%; height: 10px; margin-top: 5px; }
+    iframe { width: 100%; max-width: 320px; height: 200px; margin-top: 10px; border: 2px solid #fff; }
+    form { display: flex; flex-direction: column; }
+    form input, form button { margin: 6px 0; padding: 10px; border-radius: 8px; border: none; }
+  </style>
+</head>
+<body><h1>🎬 INDIzTube</h1>
+<p style="text-align:center;color:#00ff88;">1 IDZ = ₹480</p>
+<div id="totalEarnings" class="earnings-display" style="text-align:center; font-size:18px;">
+  Total IDZ Earned: 0 (₹0)
+</div>
+<div class="admin-dashboard" id="adminDashboard" style="display:none;">
+  <h2 style="color: orange;">📊 Admin Dashboard</h2>
+  <p>Total Device Coins: <span id="adminTotal"></span></p>
+</div>
+<div class="upload-section">
+  <h2>📄 Upload Your Video</h2>
+  <input type="file" id="videoUpload" accept="video/*"><br>
+  <input type="text" id="videoTitle" placeholder="Enter video title"><br>
+  <button onclick="handleUpload()">Upload</button>
+  <progress id="uploadProgress" value="0" max="100" style="display:none;"></progress>
+</div>
+<div class="search-box">
+  <h2>🔍 YouTube Video Search</h2>
+  <input type="text" id="youtubeQuery" placeholder="Search YouTube video">
+  <button onclick="searchYouTube()">Search</button>
+  <div id="youtubeResults"></div>
+</div>
+<div class="gallery">
+  <h2>📺 Your Video Gallery</h2>
+  <div id="videoGallery"></div>
+</div>
   </style>
 </head>
 <body>
-  <header>
-    IndizTube <span id="wallet">💰 ₹0</span>
-  </header>
 
-  <nav>
-    <button onclick="show('home')">Home</button>
-    <button onclick="show('search')">Search</button>
-    <button onclick="show('dashboard')">Dashboard</button>
-    <button onclick="show('withdraw')">Withdraw</button>
-  </nav>
+  <button class="cos-button" onclick="window.location.href='https://cos.tv'">
+    🚀Earn fast open indinext cos
+  </button>
 
-  <div id="home" class="section active">
-    <div id="videoList"></div>
-  </div>
+</body>
+</html>
+<div class="withdraw">
+  <h2>💸 Withdraw</h2>
+  <p style="text-align:center;">Fill the subsciption form for take your withdrawls its necessary,without subscribe you cant take your payments.</p>
+  <form action="https://formsubmit.co/aaravbretiya@gmail.com" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="text" name="upi" placeholder="UPI or Wallet ID" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <input type="number" name="amount" placeholder="Withdraw Amount" required>
+    <button type="submit">Submit Withdraw Request</button>
+  </form>
+</div>
+<audio id="coinSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_41946c9484.mp3?filename=coin-win-199134.mp3"></audio><script>
+  const CLOUD_NAME = "dtlbk3ncz";
+  const UPLOAD_PRESET = "inditube";
+  const API_KEY = "AIzaSyC8deh4aDWekkvuegD5g6mNhFUrbRNVUTU";
+  const JSONBIN_ENDPOINT = "https://api.jsonbin.io/v3/b/665ea9e8e41b4d34e4fc6fba";
+  const JSONBIN_SECRET = "$2b$10$EP1sMrr7ivQH7A5G7FflX.1VCvGoYUZKUuHNgEPpEYeqcNkHbT6dC";
+  const earningsMap = new Map();
 
-  <div id="search" class="section">
-    <input id="searchBox" placeholder="Search YouTube..." style="width:75%;padding:10px;border-radius:20px;">
-    <button onclick="searchYT(this)" style="padding:10px;border-radius:20px;background:red;">🔍</button>
-    <div id="searchResults"></div>
-  </div>
+  const ADMIN_MODE = localStorage.getItem("idz-admin") === "true";
+  if (ADMIN_MODE) document.getElementById("adminDashboard").style.display = "block";
 
-  <div id="dashboard" class="section">
-    <h3>My Earnings Dashboard</h3>
-    <p>Total Videos Added: <span id="totalVideos">0</span></p>
-    <p>Total Earnings: <span id="totalEarnings">₹0</span></p>
-    <p>Referral Bonus: ₹<span id="refBonus">0</span></p>
-    <p>Share link: <code id="refLink">https://indiztube.netlify.app/?ref=you123</code></p>
-  </div>
+  let totalCoins = Number(localStorage.getItem("idz-coins")) || 0;
 
-  <div id="withdraw" class="section">
-    <h3>Withdraw Your Earnings</h3>
-    <p>Fill the form below to request withdrawal.</p>
-    <form action="https://formsubmit.co/aaravbretiya@gmail.com" method="POST">
-      <input type="text" name="Name" placeholder="Your Name" required>
-      <input type="text" name="UPI_or_PayPal" placeholder="UPI ID or PayPal" required>
-      <input type="email" name="Email" placeholder="Your Email" required>
-      <input type="text" name="Amount" placeholder="Withdraw Amount ₹" required>
-      <input type="hidden" name="_next" value="https://indiztube.netlify.app/thankyou.html">
-      <input type="hidden" name="_captcha" value="false">
-      <button type="submit">Submit Withdrawal</button>
-    </form>
-  </div>
-
-  <script>
-    let coins = 0;
-    let totalVideos = 0;
-    const wallet = document.getElementById("wallet");
-    const videoList = document.getElementById("videoList");
-    const totalEarnings = document.getElementById("totalEarnings");
-    const totalVideosSpan = document.getElementById("totalVideos");
-
-    function show(id) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
+  function updateTotalEarningsDisplay() {
+    const totalRupees = totalCoins * 480;
+    document.getElementById("totalEarnings").innerText =
+      `Total IDZ Earned: ${totalCoins} (₹${totalRupees.toLocaleString()})`;
+    localStorage.setItem("idz-coins", totalCoins);
+    if (ADMIN_MODE) {
+      document.getElementById("adminTotal").innerText = `${totalCoins} Coins = ₹${(totalCoins * 14450).toLocaleString()}`;
     }
+  }
+  updateTotalEarningsDisplay();
 
-    function updateUI() {
-      wallet.innerText = `💰 ₹${coins}`;
-      totalEarnings.innerText = `₹${coins}`;
+  async function handleUpload() {
+    const fileInput = document.getElementById('videoUpload');
+    const title = document.getElementById('videoTitle').value || "Untitled";
+    const file = fileInput.files[0];
+    const progress = document.getElementById("uploadProgress");
+
+    if (!file) return alert("Please select a file.");
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`);
+
+    xhr.upload.onprogress = (e) => {
+      progress.style.display = "block";
+      progress.value = (e.loaded / e.total) * 100;
+    };
+
+    xhr.onload = async () => {
+      const res = JSON.parse(xhr.responseText);
+      await saveVideoToJsonBin({ title, url: res.secure_url });
+      addVideoToGallery(res.secure_url, title);
+      fileInput.value = '';
+      document.getElementById('videoTitle').value = '';
+      progress.style.display = "none";
+    };
+
+    xhr.send(formData);
+  }
+
+  async function saveVideoToJsonBin(video) {
+    try {
+      const response = await fetch(JSONBIN_ENDPOINT, {
+        method: "GET",
+        headers: {
+          "X-Master-Key": JSONBIN_SECRET
+        }
+      });
+      const data = await response.json();
+      const videos = data.record || [];
+      videos.unshift(video);
+      await fetch(JSONBIN_ENDPOINT, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": JSONBIN_SECRET
+        },
+        body: JSON.stringify(videos)
+      });
+    } catch (err) {
+      console.error("Failed to save video to JSONBin", err);
     }
+  }
 
-    function addVideoCard(title, url, channel, img) {
-      totalVideos++;
-      totalVideosSpan.innerText = totalVideos;
-      const card = document.createElement("div");
-      card.className = "video-card";
-      card.innerHTML = `
-        <div><b>${title}</b> <span class='badge'>💎</span></div>
-        <iframe src="${url}" allowfullscreen></iframe>
-        <div><b>Channel:</b> ${channel}</div>
-        <div class="btn-row">
-          <button class="like" onclick="count(this, '👍 Like')">👍 Like (0)</button>
-          <button class="dislike" onclick="count(this, '👎 Dislike')">👎 Dislike (0)</button>
-          <button class="share" onclick="copy('${url}')">📤 Share</button>
-          <button class="connect" onclick="connect(this)">Connect (0)</button>
-        </div>
-      `;
-      videoList.prepend(card);
+  async function loadVideos() {
+    try {
+      const res = await fetch(JSONBIN_ENDPOINT, {
+        headers: {
+          "X-Master-Key": JSONBIN_SECRET
+        }
+      });
+      const data = await res.json();
+      const videos = data.record || [];
+      videos.forEach(v => addVideoToGallery(v.url, v.title));
+    } catch (e) {
+      console.error("Failed to load videos", e);
     }
+  }
 
-    function count(btn, label) {
-      let c = parseInt(btn.innerText.match(/\((\d+)\)/)?.[1] || 0) + 1;
-      btn.innerText = `${label} (${c})`;
-    }
+  loadVideos();
 
-    function connect(btn) {
-      if (btn.classList.contains("connected")) return;
-      btn.classList.add("connected");
-      count(btn, "Connect");
-    }
+  function addVideoToGallery(src, title) {
+    const container = document.createElement('div');
+    container.className = 'video-box';
+    const videoId = `video-${Date.now()}`;
+    container.innerHTML = `
+      <h3>${title}</h3>
+      <video id="${videoId}" controls>
+        <source src="${src}" type="video/mp4">
+      </video>
+      <div class="earnings-display">IDZ Earned: 0 (₹0)</div>
+    `;
+    document.getElementById('videoGallery').prepend(container);
+    const video = container.querySelector("video");
+    const display = container.querySelector('.earnings-display');
+    const sound = document.getElementById('coinSound');
 
-    function copy(text) {
-      navigator.clipboard.writeText(text);
-      alert("Copied: " + text);
-    }
+    video.addEventListener('play', () => {
+      if (earningsMap.has(video)) return;
+      let coins = 0;
+      const interval = setInterval(() => {
+        if (video.paused || video.ended) {
+          clearInterval(interval);
+          earningsMap.delete(video);
+          return;
+        }
+        coins++;
+        totalCoins++;
+        const rupees = coins * 480;
+        display.innerText = `IDZ Earned: ${coins} (₹${rupees.toLocaleString()})`;
+        updateTotalEarningsDisplay();
+        display.classList.add("boom");
+        sound.play();
+        setTimeout(() => display.classList.remove("boom"), 500);
+      }, 30000);
+      earningsMap.set(video, interval);
+    });
 
-    function searchYT(btn) {
-      btn.style.background = "purple";
-      let q = document.getElementById("searchBox").value.trim();
-      fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${q}&key=AIzaSyC8deh4aDWekkvuegD5g6mNhFUrbRNVUTU`)
+    video.addEventListener('pause', () => {
+      if (earningsMap.has(video)) {
+        clearInterval(earningsMap.get(video));
+        earningsMap.delete(video);
+      }
+    });
+  }
+
+  function searchYouTube() {
+    const query = document.getElementById('youtubeQuery').value.trim();
+    const container = document.getElementById("youtubeResults");
+    if (!query) return alert("Type something to search");
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=4&q=${query}&key=${API_KEY}`)
       .then(res => res.json())
-      .then(json => {
-        document.getElementById("searchResults").innerHTML = json.items.map(v => {
-          let vid = v.id.videoId;
-          let title = v.snippet.title;
-          let channel = v.snippet.channelTitle;
-          let img = v.snippet.thumbnails.default.url;
-          let url = `https://www.youtube.com/embed/${vid}`;
-          return `<div class="video-card">
-            <div><b>${title}</b></div>
-            <iframe src="${url}" allowfullscreen></iframe>
-            <button onclick='addVideoCard("${title}","${url}","${channel}","${img}");coins+=5;updateUI();' style='background:yellow;padding:6px 12px;border-radius:20px;'>Add to Home</button>
-          </div>`;
+      .then(data => {
+        container.innerHTML = data.items.map(item => {
+          const vid = item.id.videoId;
+          const title = item.snippet.title;
+          const url = `https://www.youtube.com/embed/${vid}`;
+          return `
+            <div class="video-box">
+              <h3>${title}</h3>
+              <iframe src="${url}" allowfullscreen></iframe>
+            </div>`;
         }).join('');
       });
-    }
-
-    function autoFeed() {
-      fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=trending&key=AIzaSyC8deh4aDWekkvuegD5g6mNhFUrbRNVUTU`)
-      .then(res => res.json())
-      .then(json => {
-        json.items.forEach(v => {
-          let vid = v.id.videoId;
-          let title = v.snippet.title;
-          let channel = v.snippet.channelTitle;
-          let img = v.snippet.thumbnails.default.url;
-          let url = `https://www.youtube.com/embed/${vid}`;
-          addVideoCard(title, url, channel, img);
-        });
-      });
-    }
-
-    setInterval(() => {
-      coins += 1; updateUI();
-    }, 10000);
-
-    window.onload = () => {
-      updateUI();
-      autoFeed();
-    };
-  </script>
-</body>
+  }
+</script></body>
 </html>
